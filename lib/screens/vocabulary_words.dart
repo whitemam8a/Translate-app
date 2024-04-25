@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/Widgets/Widget_Card.dart';
 
@@ -11,12 +12,24 @@ class VocabularyWords extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 72, 143, 250),
         title: const Center(child: Text('Cards')),
       ),
-      body: ListView(
-        children: <Widget>[
-          card('Elephant', 'Слон', 'Элефан'),
-          card('Phone', 'Телефон', 'фон'),
-          card('Laptop', 'Ноутбук', 'лэптоп'),
-        ],
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('FlipCards').snapshots(),
+        builder: (context, snapshot) {
+          List<Widget> cardsWidgets = [];
+          if (snapshot.hasData) {
+            final cards = snapshot.data?.docs.reversed.toList();
+            for (var card in cards!) {
+              final cardWidget = widgetCard(
+                  card['FrontSide'], card['BackSide'], card['Transcription']);
+              cardsWidgets.add(cardWidget);
+            }
+          }
+          return Expanded(
+            child: ListView(
+              children: cardsWidgets.reversed.toList(),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [

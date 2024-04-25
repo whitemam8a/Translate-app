@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget callTextField(String text, TextEditingController Controller) {
+Widget callTextField(String text, TextEditingController controller) {
   return TextField(
     autofocus: true,
-    controller: Controller,
+    controller: controller,
     decoration: InputDecoration(
       contentPadding:
           const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),

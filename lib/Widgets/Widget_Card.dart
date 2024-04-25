@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flipcard/gesture_flip_card.dart';
 import 'package:flutter_flip_card/modal/flip_side.dart';
 
-Widget card(String frontSide, String backSide, String transcription) {
+Widget widgetCard(String frontSide, String backSide, String transcription) {
   return Padding(
     padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
     child: GestureFlipCard(
@@ -20,7 +20,7 @@ Widget card(String frontSide, String backSide, String transcription) {
           child: Center(
             child: Text(
               frontSide,
-              style: TextStyle(fontSize: 40),
+              style: const TextStyle(fontSize: 40),
             ),
           ),
         ),

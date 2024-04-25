@@ -1,5 +1,7 @@
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/Widgets/Widget_TextField.dart';
+import 'package:translator/models/addCardtoFirebase.dart';
 
 class AddCard extends StatefulWidget {
   const AddCard({super.key});
@@ -9,8 +11,10 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  final TextEditingController wordController = TextEditingController();
-  final TextEditingController translationController = TextEditingController();
+  // GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final TextEditingController frontSideController = TextEditingController();
+  final TextEditingController backSideController = TextEditingController();
   final TextEditingController transcriptionController = TextEditingController();
 
   // @override
@@ -35,7 +39,7 @@ class _AddCardState extends State<AddCard> {
           child: Column(
             children: [
               const Text('Front of the card'),
-              callTextField('Введите иностранное слово', wordController),
+              callTextField('Введите иностранное слово', frontSideController),
               // TextField(
               //   controller: wordController,
               //   decoration: const InputDecoration(
@@ -52,7 +56,7 @@ class _AddCardState extends State<AddCard> {
                 height: 30.0,
               ),
               const Text('Back of the card'),
-              callTextField('Введите перевод', translationController),
+              callTextField('Введите перевод', backSideController),
               // TextField(
               //   controller: translationController,
               //   decoration: const InputDecoration(
@@ -83,7 +87,21 @@ class _AddCardState extends State<AddCard> {
               Container(
                 height: 50.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addCardToFirebase(frontSideController, backSideController,
+                        transcriptionController);
+                    // CollectionReference collRef =
+                    //     FirebaseFirestore.instance.collection('FlipCards');
+                    // collRef.add({
+                    //   'FrontSide': frontSideController.text,
+                    //   'BackSide': backSideController.text,
+                    //   'Transcription': transcriptionController.text
+                    // });
+
+                    // frontSideController.clear();
+                    // backSideController.clear();
+                    // transcriptionController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(80.0),
