@@ -34,13 +34,14 @@ Widget widgetCard(String frontSide, String backSide, String transcription) {
               borderRadius: BorderRadius.circular(20)),
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
                   backSide,
                   style: const TextStyle(fontSize: 40),
                 ),
                 Text(
-                  transcription,
+                  "[$transcription]",
                   style: const TextStyle(fontSize: 20),
                 ),
               ],

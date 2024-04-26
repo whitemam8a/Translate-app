@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/Widgets/Widget_Card.dart';
+import 'package:translator/models/deleteCardsfromFirebase.dart';
 
 class VocabularyWords extends StatelessWidget {
   const VocabularyWords({super.key});
@@ -10,11 +11,27 @@ class VocabularyWords extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 72, 143, 250),
-        title: const Center(child: Text('Cards')),
+        title: const Center(
+          child: Text(
+            'Cards',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              deleteAllDocuments();
+            },
+            icon: const Icon(Icons.delete), // Иконка для кнопки
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('FlipCards').snapshots(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           List<Widget> cardsWidgets = [];
           if (snapshot.hasData) {
             final cards = snapshot.data?.docs.reversed.toList();
